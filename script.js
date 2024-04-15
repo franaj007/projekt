@@ -27,7 +27,7 @@ btn1.addEventListener("click", function()
 
     output1.innerHTML =
     "<h2>" + "Recipe:" + "</h2>" + data[0].title +
-      "<img src="+data[0].image+ " alt='recipe image'>";
+      "<img src="+data[0].image+ " alt='recipe image' id='outputImg1'>";
     
   
     })
@@ -47,13 +47,19 @@ btn2.addEventListener("click", function()
 {
   output2.innerHTML = " ";
     titleMatcher = userInput2.value;
-    let apiUrl = `https://api.spoonacular.com/recipes/complexSearch?titleMatch=${titleMatcher}&number=${maxRecipes}&apiKey=${apiKey}`;
+    let apiUrl = `https://api.spoonacular.com/recipes/complexSearch?query=${titleMatcher}&number=${maxRecipes}&apiKey=${apiKey}`;
 
     fetch(apiUrl)
     .then((response) => response.json())
     .then((data) => {
     // Handle the data (e.g., display recipe titles, images, etc.)
     console.log(data);
+    output2.innerHTML =
+    "<h2>" + "Recipe:" + "</h2>" + data.results[0].title +
+      "<img src="+data.results[0].image+ " alt='recipe image' id='outputImg2'>";
+
+
+
     })
     .catch((error) => {
     console.error('Error fetching data:', error);

@@ -1,6 +1,7 @@
 *
 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #DAFFEF;
 }
 
 body
@@ -8,7 +9,7 @@ body
     margin: 0 auto;
     height: 100vh;
     width: 100vw;
-    background-color: #4B4F63;
+    background-color: #DAFFEF;
     color: white;
 }
 
@@ -30,11 +31,10 @@ header
     align-items: center;
     justify-content: center;
 }
-header div
+#headerContainer
 {
     height: 100%;
     width: 60%;
-    background-color: #2D2E33;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -42,7 +42,7 @@ header div
 }
 
 
-footer, footer div
+footer, #footerContainer
 {
     width: 100%;
     height: 15%;
@@ -51,9 +51,8 @@ footer, footer div
     justify-content: center;
 }
 
-footer div
+#footerContainer
 {
-    background-color: #2D2E33;
     width: 60%;
     height: 100%;
     border-radius: 0 0 30px 30px;
@@ -69,14 +68,14 @@ section
     flex-direction: row;
 }
 
-section>div
+#inputContainer1, #inputContainer2
 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex-wrap: nowrap;
     width: 30%;
     height: 100%;
-    background-color: #2D2E33;
 }
 
 button
@@ -91,4 +90,26 @@ button
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: #D3C0D2;
+    margin-top: 20px;
+    border-radius: 10%;
+}
+
+#outputImg1, #outputImg2
+{
+    height: 80%;
+    width: 80%;
+    padding-bottom: 20px;
+}
+
+#inputContainer1, #inputContainer2, #footerContainer, #headerContainer
+{
+    background-color: #A6979C;
+}
+#btn1, #btn2
+{
+    color: black;
+    border-radius: 5px;
+    margin: 10px;
+    margin-bottom: 0px;
 }
