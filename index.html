@@ -5,41 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    
+    <link rel="icon" type="image/x-icon" href="favicon.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="script.js" defer></script>
 
 </head>
 <body>
     <main>
         <header>
-            <div id="headerContainer">
-                <h1>Search for recipes</h1>
-            </div>
+            <h1>Search for recipes</h1>
         </header>
-        <section>
-            <div id="inputContainer1">
-                <label for="userInput1" id="inputLabel1">
-                    Search by ingredients: 
-                    <input type="text" id="userInput1" placeholder="separate with ','">
-                </label>
-                <button id="btn1">Wyślij</button>
-                <div id="output1"></div>
-            </div>
-            <div id="inputContainer2">
-                <label for="userInput2" id="inputLabel1">
-                    Search by title:
-                    <input type="text" id="userInput2">
-                </label>
-                <button id="btn2">Wyślij</button>
-                <div id="output2"></div>
-            </div>
-        </section>
+
+        <div class="container">
+            <section>
+                <article id="searchByRecipe">
+                    <label for="inputByRecipe">Search by title</label>
+                    <input type="text" id="inputByRecipe">
+                    <button id="byRecipeBtn">Search</button>
+                    <div id="byRecipeOutput"></div>
+                </article>
+                <article id="searchByIngr"> 
+                    <label for="inputByIngr">Search by ingredients</label>
+                    <input type="text" id="inputByIngr" title="divide using ',' or ';' ">   
+                    <button id="byIngrBtn">Search</button>
+                    <div id="byIngrOutput"></div>
+                </article>
+                <article id="searchByVegan">
+                    <label for="vegan">Are you vegan?</label>
+                    <input type="checkbox" id="vegan">
+                </article>
+                <article id="alergies">
+                    <label for="alergies">Do you have any allergies?</label>
+                    <input type="text" id="alergies" title="divide using ',' or ';'">
+                </article>
+            </section>
+            <aside>
+            </aside>
+        </div>
+        
         <footer>
-            <div id="footerContainer">
-                <p>Autorzy: Franciszek Najdek, Mikołaj Mazurek</p>
-            </div>
+            <p>Autorzy: Franciszek Najdek, Mikołaj Mazurek</p>
         </footer>
     </main>
-    <script src="script.js"></script>
 </body>
 </html>
