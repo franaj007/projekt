@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <main>
+        <header>
+            <div id="headerContainer">
+                <h1>Search for recipes</h1>
+            </div>
+        </header>
+        <section>
+            <div id="inputContainer1">
+                <label for="userInput1" id="inputLabel1">
+                    Search by ingredients: 
+                    <input type="text" id="userInput1" placeholder="separate with ','">
+                </label>
+                <button id="btn1">Wyślij</button>
+                <div id="output1"></div>
+            </div>
+            <div id="inputContainer2">
+                <label for="userInput2" id="inputLabel1">
+                    Search by title:
+                    <input type="text" id="userInput2">
+                </label>
+                <button id="btn2">Wyślij</button>
+                <div id="output2"></div>
+            </div>
+        </section>
+        <footer>
+            <div id="footerContainer">
+                <p>Autorzy: Franciszek Najdek, Mikołaj Mazurek</p>
+            </div>
+        </footer>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
