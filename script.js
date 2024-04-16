@@ -1,69 +1,49 @@
-let ingredients = '';
-let titleMatcher = '';
-const maxRecipes = 1; 
-const apiKey = '3611510279734103a44c257d8dfa11ab'
+const maxRecipes = 0; 
+const apiKey = '9efeb48f9d814e97a83035634c5f4df9'
+
+const ingredientsEle = document.getElementById("ingredients");
+const titleEle = document.getElementById("title");
+const intolerancesEle = document.getElementById("intolerances");
+const veganEle = document.getElementById("vegan");
+const vegeEle = document.getElementById("vege");
+const glutenEle = document.getElementById("vegan");
+const diaryEle = document.getElementById("diary");
+
+const search = document.getElementById("search");
+const output = document.getElementById("output");
 
 
-const btn1 = document.getElementById("btn1");
-const userInput1 = document.getElementById("userInput1");
-const output1 = document.getElementById("output1");
-
-const btn2 = document.getElementById("btn2");
-const userInput2 = document.getElementById("userInput2");
-const output2 = document.getElementById("output2");
-
-
-btn1.addEventListener("click", function()
+search.addEventListener("click", function()
 {
-  output1.innerHTML = "";
-    ingredients = userInput1.value;
-    let apiUrl = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients}&number=${maxRecipes}&apiKey=${apiKey}`;
+
+    let ingredients = ingredientsEle.value;
+    let title = titleEle.value;
+
+    let vegan = veganEle.value ? "vegan" : "";
+    let vege = vegeEle.value ? "vege" : "";
+    let gluten = glutenEle.value ? "gluten" : "";
+    let diary = diaryEle.value ? "diary" : "";
+
+    let intolerances = intolerancesEle.value; 
+
+    let diet = gluten +","+ diary+","+vege+","+vegan;
+
+    let apiUrl = `https://api.spoonacular.com/recipes/complexSearch?titleMatch=${title}&ingredients=${ingredients}&intolerances=${intolerances}&diet=${diet}&apiKey=${apiKey}`;
 
     fetch(apiUrl)
     .then((response) => response.json())
     .then((data) => {
     // Handle the data (e.g., display recipe titles, images, etc.)
     console.log(data);
-
-    output1.innerHTML =
-    "<h2>" + "Recipe:" + "</h2>" + data[0].title +
-      "<img src="+data[0].image+ " alt='recipe image' id='outputImg1'>";
     
   
     })
 
 
 
-    .catch((error) => {
-    console.error('Error fetching data:', error);
-  });
-  
-  
-
+    .catch((error) => 
+    {
+      console.error('Error fetching data:', error);
+    });
 });
 
-
-btn2.addEventListener("click", function()
-{
-  output2.innerHTML = " ";
-    titleMatcher = userInput2.value;
-    let apiUrl = `https://api.spoonacular.com/recipes/complexSearch?query=${titleMatcher}&number=${maxRecipes}&apiKey=${apiKey}`;
-
-    fetch(apiUrl)
-    .then((response) => response.json())
-    .then((data) => {
-    // Handle the data (e.g., display recipe titles, images, etc.)
-    console.log(data);
-    output2.innerHTML =
-    "<h2>" + "Recipe:" + "</h2>" + data.results[0].title +
-      "<img src="+data.results[0].image+ " alt='recipe image' id='outputImg2'>";
-
-
-
-    })
-    .catch((error) => {
-    console.error('Error fetching data:', error);
-  });
-
-
-});

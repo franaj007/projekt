@@ -18,28 +18,38 @@
 
         <div class="container">
             <section>
-                <article id="searchByRecipe">
-                    <label for="inputByRecipe">Search by title</label>
-                    <input type="text" id="inputByRecipe">
-                    <button id="byRecipeBtn">Search</button>
-                    <div id="byRecipeOutput"></div>
+                <article id="searchByTitle">
+                    <label for="title">Search by title</label>
+                    <input type="text" id="title">
                 </article>
                 <article id="searchByIngr"> 
-                    <label for="inputByIngr">Search by ingredients</label>
-                    <input type="text" id="inputByIngr" title="divide using ',' or ';' ">   
-                    <button id="byIngrBtn">Search</button>
-                    <div id="byIngrOutput"></div>
+                    <label for="ingredients">Search by ingredients</label>
+                    <input type="text" id="ingredients" title="divide using ',' or ';' ">   
                 </article>
                 <article id="searchByVegan">
                     <label for="vegan">Are you vegan?</label>
                     <input type="checkbox" id="vegan">
                 </article>
-                <article id="alergies">
-                    <label for="alergies">Do you have any allergies?</label>
-                    <input type="text" id="alergies" title="divide using ',' or ';'">
+                <article id="searchByVege">
+                    <label for="vege">Are you vegetarian?</label>
+                    <input type="checkbox" id="vege">
                 </article>
+                <article id="searchByGluten">
+                    <label for="gluten">Are you gluten-free?</label>
+                    <input type="checkbox" id="gluten">
+                </article>
+                <article id="searchByDiary">
+                    <label for="vegan">Are you diary-free?</label>
+                    <input type="checkbox" id="diary">
+                </article>
+                <article id="alergies">
+                    <label for="intolerances">Do you have any allergies?</label>
+                    <input type="text" id="intolerances" title="divide using ',' or ';'">
+                </article>
+                <button id="search">Search</button>
             </section>
             <aside>
+                <div id="output"></div>
             </aside>
         </div>
         
