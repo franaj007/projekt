@@ -14,8 +14,9 @@ function checkValue()
 
 function getApiUrl()
 {
-    const dietsData = [...document.querySelectorAll("#dietsCollapse > input:checked")].map(e => e.value);
-    const intolerancesData = [...document.querySelectorAll("#intolerancesCollapse > input:checked")].map(e => e.value);
+    const dietsData = [...document.querySelectorAll("#dietsCollapse > label > input:checked")].map(e => e.value);
+    const intolerancesData = [...document.querySelectorAll("#intolerancesCollapse > label > input:checked")].map(e => e.value);
+    console.log(intolerancesData, "  ", dietsData);
     const titleMatch = document.querySelector("#byRecipeInput").value;
     let ingredients = document.querySelector("#byIngInput").value;
     ingredients.replace(", ", ",");
@@ -33,6 +34,7 @@ function getApiUrl()
         criteriaArray.push(`diet=${dietsData.join(",")}`);
     criteriaArray.push(`apiKey=${apiKey}`);
     apiUrl += criteriaArray.join("&");
+    console.log(apiUrl);
     return apiUrl;
 }
 
