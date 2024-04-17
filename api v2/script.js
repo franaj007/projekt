@@ -153,8 +153,9 @@ inputs.forEach(input => input.addEventListener("keydown", async function(e)
 let collappseMenus = document.querySelectorAll(".collapsible");
 collappseMenus.forEach(coll => coll.addEventListener("click", function()
 {
-    this.classList.toggle("active");
+    this.classList.toggle("activeButton");
     let content = this.nextElementSibling;
+    content.classList.toggle("activeContent");
     if (content.style.maxHeight)
     {
         content.style.maxHeight = null;
