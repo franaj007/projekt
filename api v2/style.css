@@ -111,3 +111,15 @@ label
 {
     font-size: 20px;
 }
+
+#searchBtn
+{
+    height: 2.4em;
+    width: 4em;
+    border-radius: 5px;
+}
+
+#byRecipeInput, #byIngredientInput, .collapsible
+{
+    margin-bottom: 10px;
+}

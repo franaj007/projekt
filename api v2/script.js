@@ -40,7 +40,8 @@ async function fetchRecipes(apiUrl, number)
 {
     apiUrl += `&number=${number}`;
     let data = await fetch(apiUrl);
-    let dataJson = await data.json();    
+    let dataJson = await data.json(); 
+    console.log(dataJson);   
     return dataJson;
 }
 
@@ -111,14 +112,15 @@ const byRecipeBtn = document.getElementById("byRecipeBtn");
 const byRecipeInput = document.getElementById("byRecipeInput");
 const byIngBtn = document.getElementById("byIngBtn");
 const byIngInput = document.getElementById("byIngInput");
+const btn = document.getElementById("searchBtn");
 let inputs = [byIngInput, byRecipeInput];
-let btns = [byRecipeBtn, byIngBtn];
+
 
 let recipeSlider = new Slider();
 byRecipeInput.focus();
 
 
-btns.forEach(button => button.addEventListener("click", function()
+btn.addEventListener("click", function()
 {
     if (checkValue())
     {
@@ -128,7 +130,7 @@ btns.forEach(button => button.addEventListener("click", function()
     }
     else
         alert("Enter correct data");
-}));
+});
 inputs.forEach(input => input.addEventListener("keydown", async function(e)
 {
     if (e.key === "Enter")
