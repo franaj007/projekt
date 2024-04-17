@@ -123,3 +123,7 @@ label
 {
     margin-bottom: 10px;
 }
+.collapsible:nth-of-type(1)
+{
+    margin-top: 10px;
+}
