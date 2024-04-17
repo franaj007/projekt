@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recepturomatr</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.svg">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <article id="appContainer">
+        <header>
+            <h1>Recepturomatr</h1>
+        </header>
+        <main>
+            <article id="searchRecipes">
+                <label for="byRecipeInput">Search by recipes</label>
+                <div class="headerDiv">
+                    <input type="text" id="byRecipeInput" placeholder="Enter the name...">
+                    <button id="byRecipeBtn">Search</button>
+                </div>
+                <label for="byIngInput">Search by ingredients</label>
+                <div class="headerDiv">
+                    <input type="text" id="byIngInput" placeholder="Enter the ingredients..." title="divide using ','">
+                    <button id="byIngBtn">Search</button>
+                </div>
+
+                <section id="specialCriteria">
+                    <button class="collapsible">Diets
+                        <img src="forward.svg" class="arrow" alt="arrow for opening/closing collapsible diets menu">
+                    </button>
+                    <div id="dietsCollapse" class="collapseContent">
+                        <label for="vege">
+                            <input type="checkbox" id="vege">
+                            Are you vegetarian?
+                        </label>
+                        <label for="vegan">
+                            <input type="checkbox" id="vegan">
+                            Are you vegan?
+                        </label>
+                        <label for="gluten-free">
+                            <input type="checkbox" id="gluten-free">
+                            Are you gluten-free?
+                        </label>
+                        <label for="keto">
+                            <input type="checkbox" id="keto">
+                            Are you on keto?
+                        </label>
+                    </div>
+                    <button class="collapsible">Intolerances
+                        <img src="forward.svg" class="arrow" alt="arrow for opening/closing collapsible intolerances menu">
+                    </button>
+                    <div id="intolerancesCollapse" class="collapseContent">
+                        <label for="dairy">
+                            <input type="checkbox" id="dairy">
+                            Are you lactose intolerant?
+                        </label>
+                        <label for="gluten-free">
+                            <input type="checkbox" id="gluten">
+                            Are you gluten intolerant?
+                        </label>
+                        <label for="peanut">
+                            <input type="checkbox" id="peanut">
+                            Are you peanut intolerant?
+                        </label>
+                        <label for="egg">
+                            <input type="checkbox" id="egg">
+                            Are you egg intolerant?
+                        </label>
+                        <label for="soy">
+                            <input type="checkbox" id="soy">
+                            Are you soy intolerant?
+                        </label>
+                        <label for="sesame">
+                            <input type="checkbox" id="sesame">
+                            Are you sesame intolerant?
+                        </label>
+                        <label for="tree-nut">
+                            <input type="checkbox" id="tree-nut">
+                            Are you tree-nut intolerant?
+                        </label>
+                        <label for="seafood">
+                            <input type="checkbox" id="seafood">
+                            Are you seafood intolerant?
+                        </label>
+                    </div>
+                </section>
+
+            </article>
+            <aside>
+                <section id="slider">
+                    <header id="sliderHeader">
+                        <button id="backBtn">
+                               <img src="back.svg" class="arrow" alt="back arrow to go one recipe back">
+                        </button>
+                        <h2 id="recipeName"></h2>
+                        <button id="forwardBtn">
+                            <img src="forward.svg" class="arrow" alt="forward arrow to go one recipe forwards">
+                        </button>
+                    </header>
+                    <section id="gallery">
+                        <img id="recipeImage" src="" alt="">
+                    </section>
+                    <footer>
+                        <button id="seeFullRecipeBtn">See full recipe</button>
+                    </footer>
+                </section>
+                <section id="recipe">
+                    <h3></h3>
+                    <p></p>
+                </section>
+            </aside>
+        </main> 
+        <footer>
+            <p>Autorzy: Franciszek Najdek, Mikołaj Mazurek</p>
+        </footer>
+    </article>
+    <div id="nigga" style="display: none"></div>
+    <script src="script.js"></script>
+</body>
+</html>
