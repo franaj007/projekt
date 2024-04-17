@@ -2,7 +2,7 @@ function checkValue()
 {
     let isCorrect = false;
     let inputs = document.querySelectorAll("input");
-    inputs.forEach(inp => 
+    inputs.forEach(inp =>
     {
         if ((inp.type === "text" && inp.value != "") || (inp.type === "checkbox" && inp.checked)) 
         {

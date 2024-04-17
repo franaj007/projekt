@@ -79,6 +79,13 @@ main
 {
     padding: 20px;
     overflow: auto;
+    direction: rtl;
+    display: flex;
+    flex-direction: column;
+    & > *
+    {
+        direction: ltr;
+    }
 }
 
 #appContainer > footer
