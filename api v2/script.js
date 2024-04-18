@@ -1,3 +1,14 @@
+function addElement(elementToAdd, target)
+{
+    const element = document.createElement(elementToAdd);
+    if (target == "body")
+        document.body.appendChild(element);
+    else
+        document.body.querySelector(target).appendChild(element);
+    return element;
+}
+
+
 function checkValue() 
 {
     let isCorrect = false;
@@ -38,7 +49,6 @@ function getApiUrl()
 
 async function fetchRecipes(apiUrl, number)
 {
-    console.log("Numer w fetchu: ", number);
     apiUrl += `&number=${number}`;
     let data = await fetch(apiUrl);
     if (!data.ok) 
@@ -80,19 +90,32 @@ class Slider
         this.arrowBack.addEventListener("click", () => this.updateRecipe(-1));
         this.fullRecipeBtn.addEventListener("click", () => this.seeFullRecipe(this.recipes.results[this.recipeIndex].title));
     }
-    seeFullRecipe(fullTitle)
+    async seeFullRecipe()
     {
-        let fullRecipeURL = `https://api.spoonacular.com/recipes/324694/analyzedInstructions?apiKey=${apiKey}`;
-        fetch(fullRecipeURL)
-        .then(response => response.json())
-        .then(data => 
+        fullRecipeList.innerHTML = "";
+        let fullRecipeURL = `https://api.spoonacular.com/recipes/1096282/analyzedInstructions?apiKey=${apiKey}`;
+        let data = await fetch(fullRecipeURL);
+        let fullRecipeSteps = await data.json();
+        fullRecipeSteps = fullRecipeSteps[0].steps;
+        console.log(fullRecipeSteps);
+        let helper;
+        for(let i = 0; i < fullRecipeSteps.length; i++)
         {
-            console.log(data);
+            helper = addElement("li", "#fullRecipeList");
+            helper.innerText = fullRecipeSteps[i].step;
+
+
+        }
+        $("document").ready(function()
+        {
+            $("#recipeImage").animate({height: "12em"})
         })
+
     }
 
     updateRecipe = (value) =>
     {
+        fullRecipeList.innerHTML = "";
         if (this.recipeIndex + value >= this.recipes.results.length - 1)
         {
             if (this.recipes.totalResults - this.recipes.results.length >= 5)
@@ -134,11 +157,9 @@ class Slider
     }
 }
 
-
-const apiKey = "9efeb48f9d814e97a83035634c5f4df9";
-const byRecipeBtn = document.getElementById("byRecipeBtn");
+const apiKey = "0eec5fc087174e60a52eac2f9d233fbe";
+const apiKey2 = "9efeb48f9d814e97a83035634c5f4df9";
 const byRecipeInput = document.getElementById("byRecipeInput");
-const byIngBtn = document.getElementById("byIngBtn");
 const byIngInput = document.getElementById("byIngInput");
 const btn = document.getElementById("searchBtn");
 let inputs = [byIngInput, byRecipeInput];

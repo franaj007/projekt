@@ -3,7 +3,7 @@
     font-family: patrick, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
-    outline: 0;
+    outline: 0;   
 }
 
 @font-face 
@@ -70,7 +70,7 @@ main
 {
     height: 1em;
     width: 100%;
-    max-width: 15em;
+    max-width: 16em;
     font-size: 17px;
     font-family: smol-patrick;
     border-radius: 0 10px 10px 0;
@@ -79,7 +79,8 @@ main
 
 #searchRecipes
 {
-    width: calc(30% + 20px);
+    width: calc(30% + 40px);
+    max-width: calc(16em + 40px);
     padding: 20px;
     overflow: auto;
     direction: rtl;
@@ -165,6 +166,10 @@ label
     padding: 0 10px 0 10px;
     border-radius: 8px;
     font-size: 15px;
+    &:not(#searchBtn)
+    {
+        margin: 15px 0 10px 0;
+    }
 }
 
 #byRecipeInput, #byIngredientInput
@@ -181,17 +186,25 @@ main > aside
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 20px;
     width: 70%;
+
 }
 
 section#slider
 {
+    &:not(.fullRecipeView)
+    {
+        max-width: 25em;
+    }
+    width: 90%;
     & > header
     {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        width: 100%;
         & > button
         {
             background-color: inherit;
@@ -229,9 +242,25 @@ section#slider
 
 section#recipe
 {
+    overflow-y: auto;
+    width: 90%;
+
+    & ol
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        
+        & > li
+        {
+            width: 90%;
+        }
+    }
     & > p, h3
     {
         word-break: break-all;
         white-space: normal;
     }
+
 }
