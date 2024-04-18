@@ -16,7 +16,6 @@ function getApiUrl()
 {
     const dietsData = [...document.querySelectorAll("#dietsCollapse > label > input:checked")].map(e => e.value);
     const intolerancesData = [...document.querySelectorAll("#intolerancesCollapse > label > input:checked")].map(e => e.value);
-    console.log(intolerancesData, "  ", dietsData);
     const titleMatch = document.querySelector("#byRecipeInput").value;
     let ingredients = document.querySelector("#byIngInput").value;
     ingredients.replace(", ", ",");
@@ -34,16 +33,21 @@ function getApiUrl()
         criteriaArray.push(`diet=${dietsData.join(",")}`);
     criteriaArray.push(`apiKey=${apiKey}`);
     apiUrl += criteriaArray.join("&");
-    console.log(apiUrl);
     return apiUrl;
 }
 
 async function fetchRecipes(apiUrl, number)
 {
+    console.log("Numer w fetchu: ", number);
     apiUrl += `&number=${number}`;
     let data = await fetch(apiUrl);
+    if (!data.ok) 
+    {
+        console.error(`HTTP error! status: ${data.status}`);
+        return;
+    }
     let dataJson = await data.json(); 
-    console.log(dataJson);   
+    console.log(dataJson);
     return dataJson;
 }
 
@@ -65,20 +69,37 @@ class Slider
         this.apiUrl = apiUrl;
         this.arrowClick();
         this.imageElement.src = this.recipes.results[this.recipeIndex].image;
+        this.nameElement.innerText = this.recipes.results[this.recipeIndex].title;
+        this.imageElement.alt = this.recipes.results[this.recipeIndex].title;
+        //this.fullRecipeBtn.href = this.recipes.results[this.recipeIndex].sourceUrl;
     }
 
     arrowClick()
     {
-        this.arrowForward.addEventListener("click", () => this.updateRecipe(1))
-        this.arrowBack.addEventListener("click", () => this.updateRecipe(-1))
+        this.arrowForward.addEventListener("click", () => this.updateRecipe(1));
+        this.arrowBack.addEventListener("click", () => this.updateRecipe(-1));
+        this.fullRecipeBtn.addEventListener("click", () => this.seeFullRecipe(this.recipes.results[this.recipeIndex].title));
     }
-    
+    seeFullRecipe(fullTitle)
+    {
+        let fullRecipeURL = `https://api.spoonacular.com/recipes/324694/analyzedInstructions?apiKey=${apiKey}`;
+        fetch(fullRecipeURL)
+        .then(response => response.json())
+        .then(data => 
+        {
+            console.log(data);
+        })
+    }
+
     updateRecipe = (value) =>
     {
-        if (this.recipeIndex + value > this.recipes.results.length - 1)
+        if (this.recipeIndex + value >= this.recipes.results.length - 1)
         {
             if (this.recipes.totalResults - this.recipes.results.length >= 5)
+            {
                 this.updateRecipeList();
+                this.recipeIndex++;
+            }
             else
                 this.recipeIndex = 0;
         }
@@ -102,9 +123,14 @@ class Slider
         $("#sliderHeader > button, footer > button").removeAttr("disabled");
     }
 
-    updateRecipeList()
+    async updateRecipeList()
     {
-        this.recipes = fetchRecipes(this.apiUrl, (this.recipes.totalResults - this.recipes.results.length) % 6);
+        let number = this.recipes.length;
+        if (this.recipes.totalResults - this.results.length > 0)
+        {
+            number += Math.min(5, this.results.totalResults - this.recipes.length);
+        }
+        this.recipes = await fetchRecipes(this.apiUrl, number);
     }
 }
 
@@ -141,7 +167,7 @@ inputs.forEach(input => input.addEventListener("keydown", async function(e)
         {
             let apiUrl = getApiUrl();
             let recipes = await fetchRecipes(apiUrl, 10);
-            recipeSlider.newSlider(recipes);
+            recipeSlider.newSlider(recipes, apiUrl);
         }
         else
             alert("Enter correct data");
@@ -169,5 +195,6 @@ collappseMenus.forEach(coll => coll.addEventListener("click", function()
         this.firstElementChild.src = "down.svg";
     } 
 }));
+
 
 
