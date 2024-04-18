@@ -121,8 +121,10 @@ main
         transform: translateY(10%);
     }
 }
-
-
+#niggaLeft, #niggaRight
+{
+    display: none;
+}
 .collapseContent
 {
     padding: 0 20px;
@@ -169,6 +171,7 @@ label
     &:not(#searchBtn)
     {
         margin: 15px 0 10px 0;
+        display: none;
     }
 }
 
@@ -184,7 +187,7 @@ label
 main > aside
 {
     display: flex;
-    flex-direction: column;
+    
     align-items: center;
     justify-content: center;
     padding: 20px;
@@ -198,7 +201,8 @@ section#slider
     {
         max-width: 25em;
     }
-    width: 90%;
+    width: 50%;
+    height: 50%;
     & > header
     {
         display: flex;
@@ -243,7 +247,32 @@ section#slider
 section#recipe
 {
     overflow-y: auto;
-    width: 90%;
+    width: 50%;
+    height: 100%;
+    & ol
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        
+        & > li
+        {
+            width: 90%;
+        }
+    }
+    & > p, h3
+    {
+        word-break: break-all;
+        white-space: normal;
+    }
+
+}
+
+section#ingredientsList
+{
+    overflow-y: auto;
+    width: 100%;
 
     & ol
     {

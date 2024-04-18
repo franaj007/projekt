@@ -96,14 +96,25 @@ class Slider
         let fullRecipeURL = `https://api.spoonacular.com/recipes/1096282/analyzedInstructions?apiKey=${apiKey}`;
         let data = await fetch(fullRecipeURL);
         let fullRecipeSteps = await data.json();
+        let helpMeNiggaImDying = fullRecipeSteps;
         fullRecipeSteps = fullRecipeSteps[0].steps;
         console.log(fullRecipeSteps);
-        let helper;
+        let helper1;
         for(let i = 0; i < fullRecipeSteps.length; i++)
         {
-            helper = addElement("li", "#fullRecipeList");
-            helper.innerText = fullRecipeSteps[i].step;
-
+            helper1 = addElement("li", "#fullRecipeList");
+            helper1.innerText = fullRecipeSteps[i].step;
+            let helper2;
+            helper2 = addElement("li", "#ingredientsList");
+            let helper3 = helpMeNiggaImDying;
+            if(helper3[i].ingredients[0] != null)
+            {
+                for (let j = 0; j < helper3[i].ingredients.length; i++)
+                {
+                    helper2 = addElement("li", "#ingredientsList");
+                    helper2.innerText = helper3[i].ingredients[j];
+                }
+            }
 
         }
         $("document").ready(function()
@@ -112,6 +123,7 @@ class Slider
         })
 
     }
+
 
     updateRecipe = (value) =>
     {
@@ -171,6 +183,16 @@ byRecipeInput.focus();
 
 btn.addEventListener("click", function()
 {
+    const seeFullRecipeBtn = document.getElementById("seeFullRecipeBtn");
+    seeFullRecipeBtn.style.display = "inherit";
+    seeFullRecipeBtn.style.height = "auto";
+    seeFullRecipeBtn.style.width = "auto";
+
+    const leftNigga = document.getElementById("niggaLeft");
+    leftNigga.style.display = "inherit";
+    const rightNigga = document.getElementById("niggaRight");
+    rightNigga.style.display = "inherit";
+
     if (checkValue())
     {
         let apiUrl = getApiUrl();
