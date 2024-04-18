@@ -198,7 +198,7 @@ section#slider
     {
         max-width: 25em;
     }
-    width: 90%;
+    width: calc(70% + 40px);
     & > header
     {
         display: flex;

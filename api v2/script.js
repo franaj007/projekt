@@ -116,12 +116,13 @@ class Slider
     updateRecipe = (value) =>
     {
         fullRecipeList.innerHTML = "";
-        console.log(this.recipeIndex);
         if (this.recipeIndex + value == this.recipes.results.length - 1)
         {
             if (this.recipes.totalResults - this.recipes.results.length >= 1)
             {
+                console.log("fetch");
                 this.updateRecipeList();
+                
             }
             this.recipeIndex += value;
         }
@@ -132,6 +133,7 @@ class Slider
         else
             this.recipeIndex += value;
 
+        console.log(this.recipeIndex);
         this.imageElement.src = this.recipes.results[this.recipeIndex].image;
         this.imageElement.alt = this.recipes.results[this.recipeIndex].title;
         this.nameElement.innerText = this.recipes.results[this.recipeIndex].title;
@@ -149,11 +151,13 @@ class Slider
 
     async updateRecipeList()
     {
-        let number = this.recipes.length;
-        if (this.recipes.totalResults - this.results.length > 0)
+        let number = this.recipes.results.length;
+        if (this.recipes.totalResults - this.recipes.results.length > 0)
         {
-            number += Math.min(5, this.results.totalResults - this.recipes.length);
+            number += Math.min(5, this.recipes.totalResults - this.recipes.results.length);
         }
+        console.log(this.apiUrl);
+        console.log(number);
         this.recipes = await fetchRecipes(this.apiUrl, number);
     }
 }
@@ -162,7 +166,7 @@ const apiKey = "0eec5fc087174e60a52eac2f9d233fbe";
 const apiKey2 = "9efeb48f9d814e97a83035634c5f4df9";
 const byRecipeInput = document.getElementById("byRecipeInput");
 const byIngInput = document.getElementById("byIngInput");
-const btn = document.getElementById("searchBtn");
+const searchBtn = document.getElementById("searchBtn");
 let inputs = [byIngInput, byRecipeInput];
 
 
@@ -170,13 +174,13 @@ let recipeSlider = new Slider();
 byRecipeInput.focus();
 
 
-btn.addEventListener("click", function()
+searchBtn.addEventListener("click", async function()
 {
     if (checkValue())
     {
         let apiUrl = getApiUrl();
-        fetchRecipes(apiUrl, 10)
-            .then(recipes => recipeSlider.newSlider(recipes));
+        let recipes = await fetchRecipes(apiUrl, 10);
+        recipeSlider.newSlider(recipes, apiUrl);
     }
     else
         alert("Enter correct data");
