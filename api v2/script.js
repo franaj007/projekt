@@ -116,16 +116,17 @@ class Slider
     updateRecipe = (value) =>
     {
         fullRecipeList.innerHTML = "";
-        if (this.recipeIndex + value >= this.recipes.results.length - 1)
+        console.log(this.recipeIndex);
+        if (this.recipeIndex + value == this.recipes.results.length - 1)
         {
-            if (this.recipes.totalResults - this.recipes.results.length >= 5)
+            if (this.recipes.totalResults - this.recipes.results.length >= 1)
             {
                 this.updateRecipeList();
-                this.recipeIndex++;
             }
-            else
-                this.recipeIndex = 0;
+            this.recipeIndex += value;
         }
+        else if (this.recipeIndex + value > this.recipes.results.length -1)
+            this.recipeIndex = 0;
         else if (this.recipeIndex + value < 0)
             this.recipeIndex = this.recipes.results.length - 1;
         else

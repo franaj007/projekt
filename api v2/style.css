@@ -207,6 +207,7 @@ section#slider
         width: 100%;
         & > button
         {
+            cursor: pointer;
             background-color: inherit;
             border: none;
             & > img
