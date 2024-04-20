@@ -67,7 +67,7 @@ class Slider
     {
         this.arrowForward = document.querySelector("#forwardBtn");
         this.arrowBack = document.querySelector("#backBtn");
-        this.fullRecipeBtn = document.querySelector("#seeFullRecipeBtn")
+        this.seeRecipeBtn = document.querySelector("#seeRecipeBtn")
         this.imageElement = document.querySelector("#recipeImage");
         this.nameElement = document.querySelector("#recipeName")
     }   
@@ -81,36 +81,53 @@ class Slider
         this.imageElement.src = this.recipes.results[this.recipeIndex].image;
         this.nameElement.innerText = this.recipes.results[this.recipeIndex].title;
         this.imageElement.alt = this.recipes.results[this.recipeIndex].title;
-        //this.fullRecipeBtn.href = this.recipes.results[this.recipeIndex].sourceUrl;
+        if (this.recipes.results.length > 1)
+        {
+            this.arrowForward.classList.remove("hidden");
+            this.arrowBack.classList.remove("hidden");
+        }
+        this.seeRecipeBtn.classList.remove("hidden");
     }
 
     arrowClick()
     {
         this.arrowForward.addEventListener("click", () => this.updateRecipe(1));
         this.arrowBack.addEventListener("click", () => this.updateRecipe(-1));
-        this.fullRecipeBtn.addEventListener("click", () => this.seeFullRecipe(this.recipes.results[this.recipeIndex].title));
+        this.seeRecipeBtn.addEventListener("click", () => this.seeFullRecipe(this.recipes.results[this.recipeIndex].id));
     }
-    async seeFullRecipe()
+
+    async seeFullRecipe(id)
     {
-        fullRecipeList.innerHTML = "";
-        let fullRecipeURL = `https://api.spoonacular.com/recipes/1096282/analyzedInstructions?apiKey=${apiKey}`;
-        let data = await fetch(fullRecipeURL);
-        let fullRecipeSteps = await data.json();
+        document.querySelector("#recipeList").innerHTML = "";
+        const fullRecipeURL = `https://api.spoonacular.com/recipes/${id}/analyzedInstructions?apiKey=${apiKey}`;
+        let fullRecipeSteps = await fetch(fullRecipeURL);
+        fullRecipeSteps = await fullRecipeSteps.json();
         fullRecipeSteps = fullRecipeSteps[0].steps;
-        console.log(fullRecipeSteps);
-        let helper;
+
+        let ingredientsArray = fullRecipeSteps.reduce((accumulator, step) => 
+        {
+            step.ingredients.forEach(ingredient => accumulator.add(ingredient.name));
+            return accumulator;
+        }, new Set());
+        ingredientsArray = Array.from(ingredientsArray);
+        
+        let liElement;
+        ingredientsArray.forEach(ingredient => 
+        {
+            liElement = addElement("li", "#recipeIng");
+            liElement.innerText = ingredient;
+        });
+
         for(let i = 0; i < fullRecipeSteps.length; i++)
         {
-            helper = addElement("li", "#fullRecipeList");
-            helper.innerText = fullRecipeSteps[i].step;
-
-
+            liElement = addElement("li", "#recipeList");
+            liElement.innerText = fullRecipeSteps[i].step;
         }
         $("document").ready(function()
         {
             $("#recipeImage").animate({height: "12em"})
         })
-
+        document.querySelector("#recipe").classList.toggle("hidden");
     }
 
     updateRecipe = (value) =>
@@ -156,8 +173,6 @@ class Slider
         {
             number += Math.min(5, this.recipes.totalResults - this.recipes.results.length);
         }
-        console.log(this.apiUrl);
-        console.log(number);
         this.recipes = await fetchRecipes(this.apiUrl, number);
     }
 }

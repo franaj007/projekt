@@ -143,10 +143,6 @@ main
     margin-bottom: 5px;
 }
 
-header > button, section > img, footer > button
-{
-    cursor: inherit;
-}
 label
 {
     font-size: 20px;
@@ -159,7 +155,7 @@ label
     justify-content: center;
     align-items: center;
 }
-#searchBtn, #seeFullRecipeBtn
+#searchBtn, #seeRecipeBtn
 {
     height: 2.4em;
     width: auto;
@@ -241,11 +237,16 @@ section#slider
 
 }
 
+.hidden
+{
+    display: none;
+}
+
 section#recipe
 {
     overflow-y: auto;
     width: 90%;
-
+    
     & ol
     {
         display: flex;
@@ -258,10 +259,10 @@ section#recipe
             width: 90%;
         }
     }
-    & > p, h3
+    & ul
     {
-        word-break: break-all;
-        white-space: normal;
+        list-style: inside square;
     }
+
 
 }
