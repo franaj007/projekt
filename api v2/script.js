@@ -123,7 +123,9 @@ class Slider
         for(let i = 0; i < fullRecipeSteps.length; i++)
         {
             liElement = addElement("li", "#recipeList");
-            liElement.innerText = fullRecipeSteps[i].step;
+            let step = fullRecipeSteps[i].step;
+            step = step.replace(/\.([A-Z])/g, ". $1");
+            liElement.innerText = step;
         }
         $("#recipe").slideDown(750);
     }
