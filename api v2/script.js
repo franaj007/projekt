@@ -98,12 +98,14 @@ class Slider
 
     async seeFullRecipe(id)
     {
-        document.querySelector("#recipeList").innerHTML = "";
+        this.clearRecipe();
+        $("#recipe").slideUp(0);
         const fullRecipeURL = `https://api.spoonacular.com/recipes/${id}/analyzedInstructions?apiKey=${apiKey}`;
         let fullRecipeSteps = await fetch(fullRecipeURL);
         fullRecipeSteps = await fullRecipeSteps.json();
         fullRecipeSteps = fullRecipeSteps[0].steps;
-
+        $("#recipeImage").animate({height: "12em"})
+        
         let ingredientsArray = fullRecipeSteps.reduce((accumulator, step) => 
         {
             step.ingredients.forEach(ingredient => accumulator.add(ingredient.name));
@@ -123,23 +125,24 @@ class Slider
             liElement = addElement("li", "#recipeList");
             liElement.innerText = fullRecipeSteps[i].step;
         }
-        $("document").ready(function()
-        {
-            $("#recipeImage").animate({height: "12em"})
-        })
-        document.querySelector("#recipe").classList.toggle("hidden");
+        $("#recipe").slideDown(750);
+    }
+
+    clearRecipe()
+    {
+        document.querySelector("#ingContainer > h3").classList.toggle("hidden");
+        document.querySelector("#recipeList").innerHTML = "";
+        document.querySelector("#recipeIng").innerHTML = "";
     }
 
     updateRecipe = (value) =>
     {
-        fullRecipeList.innerHTML = "";
+        this.clearRecipe();
         if (this.recipeIndex + value == this.recipes.results.length - 1)
         {
             if (this.recipes.totalResults - this.recipes.results.length >= 1)
             {
-                console.log("fetch");
                 this.updateRecipeList();
-                
             }
             this.recipeIndex += value;
         }
@@ -150,7 +153,6 @@ class Slider
         else
             this.recipeIndex += value;
 
-        console.log(this.recipeIndex);
         this.imageElement.src = this.recipes.results[this.recipeIndex].image;
         this.imageElement.alt = this.recipes.results[this.recipeIndex].title;
         this.nameElement.innerText = this.recipes.results[this.recipeIndex].title;
