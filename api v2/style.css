@@ -179,7 +179,7 @@ main > aside
     justify-content: center;
     padding: 20px;
     width: 70%;
-
+    flex-grow: 1;
 }
 
 section#slider
@@ -239,6 +239,7 @@ section#recipe
     & > *
     {
         height: 100%;
+        max-inline-size: 30em;
     }
 
     & ol
