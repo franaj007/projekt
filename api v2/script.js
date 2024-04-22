@@ -64,6 +64,8 @@ async function fetchRecipes(apiUrl, number)
 class Slider
 {
     static isRecipeHidden = true;
+    static isRecipeGenerated = false;
+
     constructor()
     {
         this.arrowForward = document.querySelector("#forwardBtn");
@@ -71,14 +73,17 @@ class Slider
         this.seeRecipeBtn = document.querySelector("#seeRecipeBtn")
         this.imageElement = document.querySelector("#recipeImage");
         this.nameElement = document.querySelector("#recipeName")
+        this.arrowClick();
     }   
     
     newSlider(recipes, apiUrl)
     {
+        Slider.isRecipeHidden = true;
+        Slider.isRecipeGenerated = false;
+        this.clearRecipe();
         this.recipes = recipes;
         this.recipeIndex = 0;
         this.apiUrl = apiUrl;
-        this.arrowClick();
         this.imageElement.src = this.recipes.results[this.recipeIndex].image;
         this.nameElement.innerText = this.recipes.results[this.recipeIndex].title;
         this.imageElement.alt = this.recipes.results[this.recipeIndex].title;
@@ -98,14 +103,15 @@ class Slider
         {
             if (Slider.isRecipeHidden)
             {
-                this.seeFullRecipe(this.recipes.results[this.recipeIndex].id)
-                Slider.isRecipeHidden = false;
-                this.seeRecipeBtn.innerText = "Hide full recipe";
+                this.fetchFullRecipe(this.recipes.results[this.recipeIndex].id).then(() =>
+                {
+                    Slider.showRecipe();
+                    this.seeRecipeBtn.innerText = "Hide full recipe";
+                });
             }
             else
             {
                 Slider.hideRecipe();
-                Slider.isRecipeHidden = true;
                 this.seeRecipeBtn.innerText = "Show full recipe";
             }
         });
@@ -114,23 +120,33 @@ class Slider
     static hideRecipe()
     {
         $("#recipe").slideUp(750);
+        Slider.isRecipeHidden = true;
     }
     static showRecipe()
     {
         $("#recipe").slideDown(750);
         $("#recipe > div > h3").removeClass("hidden");
+        Slider.isRecipeGenerated = true;
+        Slider.isRecipeHidden = false;
     }
+
     clearRecipe()
     {
         document.querySelector("#ingContainer > h3").classList.add("hidden");
         document.querySelector("#recipeList").innerHTML = "";
         document.querySelector("#recipeIng").innerHTML = "";
+        Slider.isRecipeGenerated = false;
+        Slider.isRecipeHidden = true;
+        this.seeRecipeBtn.innerText = "Show full recipe";
     }
     
-    async seeFullRecipe(id)
+    async fetchFullRecipe(id)
     {
-        this.clearRecipe();
-        $("#recipe").hide();
+        if (Slider.isRecipeGenerated)
+        {
+            return;
+        }
+        $("#recipe").slideUp(0);
         const fullRecipeURL = `https://api.spoonacular.com/recipes/${id}/analyzedInstructions?apiKey=${apiKey}`;
         let fullRecipeSteps = await fetch(fullRecipeURL);
         fullRecipeSteps = await fullRecipeSteps.json();
@@ -159,10 +175,6 @@ class Slider
             liElement.innerText = step;
         }
 
-        Promise.resolve().then(function() 
-        {
-            Slider.showRecipe();
-        });
     }
 
 
@@ -189,16 +201,6 @@ class Slider
         this.nameElement.innerText = this.recipes.results[this.recipeIndex].title;
     }
 
-    disableBtns()
-    {
-        $("#sliderHeader > button, footer > button").attr("disabled", "true");
-    }
-
-    enableBtns()
-    {
-        $("#sliderHeader > button, footer > button").removeAttr("disabled");
-    }
-
     async updateRecipeList()
     {
         let number = this.recipes.results.length;
@@ -210,8 +212,9 @@ class Slider
     }
 }
 
-const apiKey = "0eec5fc087174e60a52eac2f9d233fbe";
-const apiKey2 = "9efeb48f9d814e97a83035634c5f4df9";
+//const apiKey = "0eec5fc087174e60a52eac2f9d233fbe";
+//const apiKey = "9efeb48f9d814e97a83035634c5f4df9";
+const apiKey = "e3f134f9f86248e1af1152b093b005f8";
 const byRecipeInput = document.getElementById("byRecipeInput");
 const byIngInput = document.getElementById("byIngInput");
 const searchBtn = document.getElementById("searchBtn");
