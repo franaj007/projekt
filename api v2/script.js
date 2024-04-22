@@ -63,6 +63,7 @@ async function fetchRecipes(apiUrl, number)
 
 class Slider
 {
+    static isRecipeHidden = true;
     constructor()
     {
         this.arrowForward = document.querySelector("#forwardBtn");
@@ -93,7 +94,30 @@ class Slider
     {
         this.arrowForward.addEventListener("click", () => this.updateRecipe(1));
         this.arrowBack.addEventListener("click", () => this.updateRecipe(-1));
-        this.seeRecipeBtn.addEventListener("click", () => this.seeFullRecipe(this.recipes.results[this.recipeIndex].id)); //alternacja do zrobienia
+        this.seeRecipeBtn.addEventListener("click", () => 
+        {
+            if (Slider.isRecipeHidden)
+            {
+                this.seeFullRecipe(this.recipes.results[this.recipeIndex].id)
+                Slider.isRecipeHidden = false;
+                this.seeRecipeBtn.innerText = "Hide full recipe";
+            }
+            else
+            {
+                Slider.hideRecipe();
+                Slider.isRecipeHidden = true;
+                this.seeRecipeBtn.innerText = "Show full recipe";
+            }
+        });
+    }
+
+    static hideRecipe()
+    {
+        $("#recipe").slideUp(750);
+    }
+    static showRecipe()
+    {
+        $("#recipe").slideDown(750);
     }
 
     async seeFullRecipe(id)
@@ -128,7 +152,7 @@ class Slider
             step = step.replace(/\.([A-Z])/g, ". $1");
             liElement.innerText = step;
         }
-        $("#recipe").slideDown(750);
+        Slider.showRecipe();
     }
 
     clearRecipe()
