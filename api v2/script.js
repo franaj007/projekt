@@ -118,13 +118,19 @@ class Slider
     static showRecipe()
     {
         $("#recipe").slideDown(750);
+        $("#recipe > div > h3").removeClass("hidden");
     }
-
+    clearRecipe()
+    {
+        document.querySelector("#ingContainer > h3").classList.add("hidden");
+        document.querySelector("#recipeList").innerHTML = "";
+        document.querySelector("#recipeIng").innerHTML = "";
+    }
+    
     async seeFullRecipe(id)
     {
         this.clearRecipe();
-        document.querySelector("#ingContainer > h3").classList.remove("hidden");
-        $("#recipe").slideUp(0);
+        $("#recipe").hide();
         const fullRecipeURL = `https://api.spoonacular.com/recipes/${id}/analyzedInstructions?apiKey=${apiKey}`;
         let fullRecipeSteps = await fetch(fullRecipeURL);
         fullRecipeSteps = await fullRecipeSteps.json();
@@ -152,15 +158,13 @@ class Slider
             step = step.replace(/\.([A-Z])/g, ". $1");
             liElement.innerText = step;
         }
-        Slider.showRecipe();
+
+        Promise.resolve().then(function() 
+        {
+            Slider.showRecipe();
+        });
     }
 
-    clearRecipe()
-    {
-        document.querySelector("#ingContainer > h3").classList.add("hidden");
-        document.querySelector("#recipeList").innerHTML = "";
-        document.querySelector("#recipeIng").innerHTML = "";
-    }
 
     updateRecipe = (value) =>
     {
