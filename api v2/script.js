@@ -32,18 +32,18 @@ function getApiUrl()
     ingredients.replace(", ", ",");
 
     let apiUrl = "https://api.spoonacular.com/recipes/complexSearch?";
-
-    let criteriaArray = [];
+//criteriaArray
+    let helpMeNiggaImDying = [];
     if (titleMatch)
-        criteriaArray.push(`titleMatch=${titleMatch}`);
+        helpMeNiggaImDying.push(`titleMatch=${titleMatch}`);
     if (ingredients)
-        criteriaArray.push(`includeIngredients=${ingredients}`);
+        helpMeNiggaImDying.push(`includeIngredients=${ingredients}`);
     if (intolerancesData.length > 0)
-        criteriaArray.push(`intolerances=${intolerancesData.join(",")}`);
+        helpMeNiggaImDying.push(`intolerances=${intolerancesData.join(",")}`);
     if (dietsData.length > 0)
-        criteriaArray.push(`diet=${dietsData.join(",")}`);
-    criteriaArray.push(`apiKey=${apiKey}`);
-    apiUrl += criteriaArray.join("&");
+        helpMeNiggaImDying.push(`diet=${dietsData.join(",")}`);
+    helpMeNiggaImDying.push(`apiKey=${apiKey}`);
+    apiUrl += helpMeNiggaImDying.join("&");
     return apiUrl;
 }
 
@@ -131,8 +131,11 @@ class Slider
     }
     static showRecipe()
     {
-        $("#recipe").slideDown(750);
-        $("#recipeImage").animate({height: "12em"})
+        
+        $("#recipeImage").animate({height: "12em"}, function () 
+        {
+            $("#recipe").slideDown(750)
+        });
         $("#recipe > div > h3").removeClass("hidden");
         Slider.isRecipeGenerated = true;
         Slider.isRecipeHidden = false;
@@ -221,8 +224,8 @@ class Slider
 }
 
 //const apiKey = "0eec5fc087174e60a52eac2f9d233fbe";
-//const apiKey = "9efeb48f9d814e97a83035634c5f4df9";
-const apiKey = "e3f134f9f86248e1af1152b093b005f8";
+const apiKey = "9efeb48f9d814e97a83035634c5f4df9";
+//const apiKey = "e3f134f9f86248e1af1152b093b005f8";
 const byRecipeInput = document.getElementById("byRecipeInput");
 const byIngInput = document.getElementById("byIngInput");
 const searchBtn = document.getElementById("searchBtn");
