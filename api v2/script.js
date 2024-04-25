@@ -57,7 +57,6 @@ async function fetchRecipes(apiUrl, number)
         return;
     }
     let dataJson = await data.json(); 
-    console.log(dataJson);
     return dataJson;
 }
 
@@ -65,6 +64,7 @@ class Slider
 {
     static isRecipeHidden = true;
     static isRecipeGenerated = false;
+    static initialImgHeight;
 
     constructor()
     {
@@ -93,8 +93,14 @@ class Slider
             this.arrowBack.classList.remove("hidden");
         }
         this.seeRecipeBtn.classList.remove("hidden");
+        document.querySelector("#slider").classList.remove("hidden");
+        $(document).ready(function()
+        {
+            Slider.initialImgHeight = $("#recipeImage").height();
+            console.log(Slider.initialImgHeight);
+        });
     }
-
+    
     arrowClick()
     {
         this.arrowForward.addEventListener("click", () => this.updateRecipe(1));
@@ -120,11 +126,13 @@ class Slider
     static hideRecipe()
     {
         $("#recipe").slideUp(750);
+        $("#recipeImage").animate({height: `${Slider.initialImgHeight}px`});
         Slider.isRecipeHidden = true;
     }
     static showRecipe()
     {
         $("#recipe").slideDown(750);
+        $("#recipeImage").animate({height: "12em"})
         $("#recipe > div > h3").removeClass("hidden");
         Slider.isRecipeGenerated = true;
         Slider.isRecipeHidden = false;
@@ -135,6 +143,7 @@ class Slider
         document.querySelector("#ingContainer > h3").classList.add("hidden");
         document.querySelector("#recipeList").innerHTML = "";
         document.querySelector("#recipeIng").innerHTML = "";
+        $("#recipeImage").animate({height: `${Slider.initialImgHeight}px`}, 0);
         Slider.isRecipeGenerated = false;
         Slider.isRecipeHidden = true;
         this.seeRecipeBtn.innerText = "Show full recipe";
@@ -151,7 +160,6 @@ class Slider
         let fullRecipeSteps = await fetch(fullRecipeURL);
         fullRecipeSteps = await fullRecipeSteps.json();
         fullRecipeSteps = fullRecipeSteps[0].steps;
-        $("#recipeImage").animate({height: "12em"})
         
         let ingredientsArray = fullRecipeSteps.reduce((accumulator, step) => 
         {

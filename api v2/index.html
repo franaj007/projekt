@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recepturomatr</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.svg">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Recepturomatr</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/x-icon" href="favicon.svg">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="script.js" defer></script>
 </head>
 <body>
     <article id="appContainer">
         <header>
-            <h1>Recepturomatr</h1>
+            <h1>Recepturo-inator</h1>
         </header>
         <main>
             <article id="searchRecipes">
@@ -89,7 +90,7 @@
                 </div>
             </article>
             <aside>
-                <section id="slider">
+                <section id="slider" class="hidden">
                     <header id="sliderHeader">
                         <button id="backBtn" class="hidden">
                                <img src="back.svg" class="arrow" alt="back arrow to go one recipe back">
@@ -121,6 +122,5 @@
             <p>Autorzy: Franciszek Najdek, Mikołaj Mazurek</p>
         </footer>
     </article>
-    <script src="script.js"></script>
 </body>
 </html>

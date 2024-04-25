@@ -184,17 +184,19 @@ main > aside
 
 section#slider
 {
-    &:not(.fullRecipeView)
-    {
-        max-width: 25em;
-    }
+    max-width: 25em;
+    
     width: calc(70% + 40px);
     & > header
     {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 100%;
+        width: calc(100% - 1.2em - 3px);
+        border: 2px solid black;
+        border-radius: 6.5% 6.5% 0 0;
+        border-bottom: 0;
+        padding: 0 0.6em;
         & > button
         {
             cursor: pointer;
@@ -214,21 +216,29 @@ section#slider
             text-align: center;
         }
     }
-
+    
     & > #gallery
     {
         display: flex;
         justify-content: center;
         align-items: center;
-    }
+        border: 2px solid black;
+        border-radius: 0 0 6.5% 6.5%;
 
+        & > img
+        {
+            border-radius: 0 0 6.5% 6.5%;
+            width: 100%;
+        }
+    }
+    
     & > footer 
     {
         display: flex;
         justify-content: center;
         align-items: center;
     }
-
+    
 }
 
 section#recipe
