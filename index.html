@@ -1,61 +1,126 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="script.js" defer></script>
-
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Recepturomatr</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" type="image/x-icon" href="images/favicon.svg">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="script.js" defer></script>
 </head>
 <body>
-    <main>
+    <article id="appContainer">
         <header>
-            <h1>Search for recipes</h1>
+            <h1>Recepturo-inator</h1>
         </header>
+        <main>
+            <article id="searchRecipes">
+                <label for="byRecipeInput">Search by recipes</label>
+                <div class="headerDiv">
+                    <input type="text" id="byRecipeInput" placeholder="Enter the name...">
+                </div>
+                <label for="byIngInput">Search by ingredients</label>
+                <div class="headerDiv">
+                    <input type="text" id="byIngInput" placeholder="Enter the ingredients..." title="divide using ','">
+                </div>
 
-        <div class="container">
-            <section>
-                <article id="searchByTitle">
-                    <label for="title">Search by title</label>
-                    <input type="text" id="title">
-                </article>
-                <article id="searchByIngr"> 
-                    <label for="ingredients">Search by ingredients</label>
-                    <input type="text" id="ingredients" title="divide using ',' or ';' ">   
-                </article>
-                <article id="searchByVegan">
-                    <label for="vegan">Are you vegan?</label>
-                    <input type="checkbox" id="vegan">
-                </article>
-                <article id="searchByVege">
-                    <label for="vege">Are you vegetarian?</label>
-                    <input type="checkbox" id="vege">
-                </article>
-                <article id="searchByGluten">
-                    <label for="gluten">Are you gluten-free?</label>
-                    <input type="checkbox" id="gluten">
-                </article>
-                <article id="searchByDiary">
-                    <label for="vegan">Are you diary-free?</label>
-                    <input type="checkbox" id="diary">
-                </article>
-                <article id="alergies">
-                    <label for="intolerances">Do you have any allergies?</label>
-                    <input type="text" id="intolerances" title="divide using ',' or ';'">
-                </article>
-                <button id="search">Search</button>
-            </section>
+                <section id="specialCriteria">
+                    <button class="collapsible">Special diets
+                        <img src="images/forward.svg" class="arrow" alt="arrow for opening/closing collapsible diets menu">
+                    </button>
+                    <div id="dietsCollapse" class="collapseContent">
+                        <label for="vege">
+                            <input type="checkbox" id="vege" value="vegetarian">
+                            vegetarian
+                        </label>
+                        <label for="vegan">
+                            <input type="checkbox" id="vegan" value="vegan">
+                            vegan
+                        </label>
+                        <label for="gluten-free">
+                            <input type="checkbox" id="gluten-free" value="gluten free`">
+                            gluten-free
+                        </label>
+                        <label for="keto">
+                            <input type="checkbox" id="keto" value="ketogenic">
+                            keto
+                        </label>
+                    </div>
+                    <button class="collapsible">Intolerances
+                        <img src="images/forward.svg" class="arrow" alt="arrow for opening/closing collapsible intolerances menu">
+                    </button>
+                    <div id="intolerancesCollapse" class="collapseContent">
+                        <label for="dairy">
+                            <input type="checkbox" id="dairy" value="dairy">
+                            lactose intolerant
+                        </label>
+                        <label for="gluten-free">
+                            <input type="checkbox" id="gluten" value="gluten">
+                            gluten intolerant
+                        </label>
+                        <label for="peanut">
+                            <input type="checkbox" id="peanut" value="peanut">
+                            peanut intolerant
+                        </label>
+                        <label for="egg">
+                            <input type="checkbox" id="egg" value="egg">
+                            egg intolerant
+                        </label>
+                        <label for="soy">
+                            <input type="checkbox" id="soy" value="soy">
+                            soy intolerant
+                        </label>
+                        <label for="sesame">
+                            <input type="checkbox" id="sesame" value="sesame">
+                            sesame intolerant
+                        </label>
+                        <label for="tree-nut">
+                            <input type="checkbox" id="tree-nut" value="tree nut">
+                            tree-nut intolerant
+                        </label>
+                        <label for="seafood">
+                            <input type="checkbox" id="seafood" value="seafood">
+                            seafood intolerant
+                        </label>
+                    </div>
+                </section>
+                <div id="searchBtnContainer">
+                    <button id="searchBtn">Search</button>
+                </div>
+            </article>
             <aside>
-                <div id="output"></div>
+                <section id="slider" class="hidden">
+                    <header id="sliderHeader">
+                        <button id="backBtn" class="hidden">
+                               <img src="images/back.svg" class="arrow" alt="back arrow to go one recipe back">
+                        </button>
+                        <h2 id="recipeName"></h2>
+                        <button id="forwardBtn" class="hidden">
+                            <img src="images/forward.svg" class="arrow" alt="forward arrow to go one recipe forwards">
+                        </button>
+                    </header>
+                    <section id="gallery">
+                        <img id="recipeImage" src="" alt="">
+                    </section>
+                    <footer>
+                        <button id="seeRecipeBtn" class="hidden">See full recipe</button>
+                    </footer>
+                </section>
+                <section id="recipe">
+                    <div id="ingContainer">
+                        <h3 class="hidden">Ingredients</h3>
+                        <ul id="recipeIng"></ul>
+                    </div>
+                    <div id="recipeContainer">
+                        <ol id="recipeList"></ol>
+                    </div>
+                </section>
             </aside>
-        </div>
-        
+        </main> 
         <footer>
             <p>Autorzy: Franciszek Najdek, Mikołaj Mazurek</p>
         </footer>
-    </main>
+    </article>
 </body>
 </html>
