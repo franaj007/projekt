@@ -32,18 +32,19 @@ function getApiUrl()
     ingredients.replace(", ", ",");
 
     let apiUrl = "https://api.spoonacular.com/recipes/complexSearch?";
-//criteriaArray
-    let helpMeNiggaImDying = [];
+
+    let criteriaArray = [];
     if (titleMatch)
-        helpMeNiggaImDying.push(`titleMatch=${titleMatch}`);
+        criteriaArray.push(`titleMatch=${titleMatch}`);
     if (ingredients)
-        helpMeNiggaImDying.push(`includeIngredients=${ingredients}`);
+        criteriaArray.push(`includeIngredients=${ingredients}`);
     if (intolerancesData.length > 0)
-        helpMeNiggaImDying.push(`intolerances=${intolerancesData.join(",")}`);
+        criteriaArray.push(`intolerances=${intolerancesData.join(",")}`);
     if (dietsData.length > 0)
-        helpMeNiggaImDying.push(`diet=${dietsData.join(",")}`);
-    helpMeNiggaImDying.push(`apiKey=${apiKey}`);
-    apiUrl += helpMeNiggaImDying.join("&");
+        criteriaArray.push(`diet=${dietsData.join(",")}`);
+    criteriaArray.push(`apiKey=${apiKey}`);
+    apiUrl += criteriaArray.join("&");
+
     return apiUrl;
 }
 
@@ -94,7 +95,7 @@ class Slider
         }
         this.seeRecipeBtn.classList.remove("hidden");
         document.querySelector("#slider").classList.remove("hidden");
-        $(document).ready(function()
+        this.imageElement.addEventListener("load", () => 
         {
             Slider.initialImgHeight = $("#recipeImage").height();
             console.log(Slider.initialImgHeight);
@@ -146,7 +147,10 @@ class Slider
         document.querySelector("#ingContainer > h3").classList.add("hidden");
         document.querySelector("#recipeList").innerHTML = "";
         document.querySelector("#recipeIng").innerHTML = "";
-        $("#recipeImage").animate({height: `${Slider.initialImgHeight}px`}, 0);
+
+        if (!Slider.isRecipeHidden)
+            $("#recipeImage").animate({height: `${Slider.initialImgHeight}px`}, 0);
+
         Slider.isRecipeGenerated = false;
         Slider.isRecipeHidden = true;
         this.seeRecipeBtn.innerText = "Show full recipe";
@@ -275,12 +279,12 @@ collappseMenus.forEach(coll => coll.addEventListener("click", function()
     if (content.style.maxHeight)
     {
         content.style.maxHeight = null;
-        this.firstElementChild.src = "forward.svg";
+        this.firstElementChild.src = "images/forward.svg";
     } 
     else
     {
         content.style.maxHeight = content.scrollHeight + "px";
-        this.firstElementChild.src = "down.svg";
+        this.firstElementChild.src = "images/down.svg";
     } 
 }));
 
