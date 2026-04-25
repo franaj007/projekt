@@ -26,7 +26,7 @@ model GroupMember {
   id      String @id @default(uuid())
   groupId String
   userId  String
-  group   Group  @relation(fields: [groupId], references: [id])
-  user    User   @relation(fields: [userId], references: [id])
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
