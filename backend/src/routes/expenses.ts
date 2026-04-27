@@ -46,6 +46,16 @@ router.post('/', async (req, res) => {
     if (Math.abs(splitsTotal - parsedAmount) > 0.01) {
       return res.status(400).json({ error: `Splits total (${splitsTotal.toFixed(2)}) must equal amount (${parsedAmount.toFixed(2)})` });
     }
+
+    // Sprawdzenie czy użytkownicy istnieją (Realizm: Franciszek dodaje to po testach)
+    const userIds = splits.map((s: any) => s.userId);
+    const existingUsers = await prisma.user.findMany({
+      where: { id: { in: userIds } }
+    });
+
+    if (existingUsers.length !== userIds.length) {
+      return res.status(400).json({ error: 'One or more users in splits do not exist' });
+    }
     
     const expense = await prisma.expense.create({
       data: {
