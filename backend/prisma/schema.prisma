@@ -13,6 +13,8 @@ model User {
   passwordHash  String
   name          String
   groups        GroupMember[]
+  expensesPaid  Expense[]       @relation("ExpensePayer")
+  expenseSplits ExpenseSplit[]
 }
 
 model Group {
@@ -20,6 +22,7 @@ model Group {
   name      String
   createdAt DateTime        @default(now())
   members   GroupMember[]
+  expenses  Expense[]
 }
 
 model GroupMember {
@@ -28,5 +31,26 @@ model GroupMember {
   userId  String
   group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
   user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Expense {
+  id          String         @id @default(uuid())
+  groupId     String
+  paidById    String
+  amount      Decimal
+  description String
+  date        DateTime       @default(now())
+  group       Group          @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  paidBy      User           @relation("ExpensePayer", fields: [paidById], references: [id])
+  splits      ExpenseSplit[]
+}
+
+model ExpenseSplit {
+  id        String  @id @default(uuid())
+  expenseId String
+  userId    String
+  amount    Decimal
+  expense   Expense @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
