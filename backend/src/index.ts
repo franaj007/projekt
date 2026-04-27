@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import usersRouter from './routes/users';
+import groupsRouter from './routes/groups';
+import { requireAuth } from './middleware/auth';
 
 
 dotenv.config();
@@ -14,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/users', usersRouter);
+app.use('/api/groups', requireAuth, groupsRouter);
 
 
 app.get('/', (req, res) => {
