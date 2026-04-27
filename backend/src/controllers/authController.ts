@@ -1,14 +1,11 @@
-import express from 'express';
+import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import prisma from '../db';
-import * as authController from '../controllers/authController';
 
-const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'secret_key';
 
-// Register
-router.post('/register', async (req, res) => {
+export const register = async (req: Request, res: Response) => {
   try {
     const { email, password, name } = req.body;
     
@@ -27,10 +24,9 @@ router.post('/register', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Registration failed' });
   }
-});
+};
 
-// Login
-router.post('/login', async (req, res) => {
+export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     
@@ -49,11 +45,4 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Login failed' });
   }
-});
-
-
-
-router.post('/register', authController.register);
-router.post('/login', authController.login);
-
-export default router;
+};
