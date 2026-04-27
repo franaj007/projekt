@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 
 import usersRouter from './routes/users';
 import groupsRouter from './routes/groups';
+import expensesRouter from './routes/expenses';
 import { requireAuth } from './middleware/auth';
 
 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use('/api/users', usersRouter);
 app.use('/api/groups', requireAuth, groupsRouter);
+app.use('/api/expenses', requireAuth, expensesRouter);
 
 
 app.get('/', (req, res) => {
