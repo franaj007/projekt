@@ -46,13 +46,22 @@ router.get('/:groupId', async (req, res) => {
 
     let i = 0; // index dłużnika
     let j = 0; // index wierzyciela
+    let safetyCounter = 0; // Zapobiega nieskończonym pętlom w przypadkach brzegowych z cyklicznymi długami (A->B, B->C, C->A) i błędami precyzji zmiennoprzecinkowej
 
-    while (i < debtors.length && j < creditors.length) {
+    while (i < debtors.length && j < creditors.length && safetyCounter < 1000) {
+      safetyCounter++;
       const debtor = debtors[i];
       const creditor = creditors[j];
 
       // Kwota do wyrównania to minimum z (tego co dłużnik jest winien, tego co wierzyciel ma dostać)
       const amountToSettle = Math.min(Math.abs(debtor.amount), creditor.amount);
+
+      // Pomijamy "zerowe" transakcje, które mogłyby zawiesić pętlę
+      if (amountToSettle < 0.01) {
+        if (Math.abs(debtor.amount) < 0.01) i++;
+        if (creditor.amount < 0.01) j++;
+        continue;
+      }
 
       settlements.push({
         from: debtor.userId,
