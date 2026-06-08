@@ -7,6 +7,19 @@ import * as authController from '../controllers/authController';
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'secret_key';
 
+// Get all users
+router.get('/', async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      select: { id: true, name: true, email: true },
+      orderBy: { name: 'asc' },
+    });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+});
+
 // Register
 router.post('/register', async (req, res) => {
   try {

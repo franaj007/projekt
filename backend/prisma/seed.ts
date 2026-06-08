@@ -54,7 +54,7 @@ async function main() {
     },
   });
 
-  // Tworzenie wydatku
+  // Tworzenie pierwszego wydatku (Paliwo)
   await prisma.expense.create({
     data: {
       groupId: group.id,
@@ -66,6 +66,57 @@ async function main() {
           { userId: user1.id, amount: 50.00 },
           { userId: user2.id, amount: 50.00 },
           { userId: user3.id, amount: 50.00 },
+        ],
+      },
+    },
+  });
+
+  // Tworzenie drugiego wydatku (Noclegi)
+  await prisma.expense.create({
+    data: {
+      groupId: group.id,
+      paidById: user2.id,
+      amount: 900.00,
+      description: 'Wynajem domku w górach',
+      splits: {
+        create: [
+          { userId: user1.id, amount: 300.00 },
+          { userId: user2.id, amount: 300.00 },
+          { userId: user3.id, amount: 300.00 },
+        ],
+      },
+    },
+  });
+
+  // Tworzenie trzeciego wydatku (Jedzenie)
+  await prisma.expense.create({
+    data: {
+      groupId: group.id,
+      paidById: user3.id,
+      amount: 240.00,
+      description: 'Zakupy w Biedronce',
+      splits: {
+        create: [
+          { userId: user1.id, amount: 80.00 },
+          { userId: user2.id, amount: 80.00 },
+          { userId: user3.id, amount: 80.00 },
+        ],
+      },
+    },
+  });
+
+  // Tworzenie czwartego wydatku (Atrakcje)
+  await prisma.expense.create({
+    data: {
+      groupId: group.id,
+      paidById: user1.id,
+      amount: 120.00,
+      description: 'Bilety na kolejkę linową',
+      splits: {
+        create: [
+          { userId: user1.id, amount: 40.00 },
+          { userId: user2.id, amount: 40.00 },
+          { userId: user3.id, amount: 40.00 },
         ],
       },
     },
